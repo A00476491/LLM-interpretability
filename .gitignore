@@ -1,0 +1,6 @@
+# Ignore everything in model/ and data/
+model/*
+!model/.gitkeep
+
+data/*
+!data/.gitkeep
