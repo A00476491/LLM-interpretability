@@ -3,6 +3,18 @@
 This assignment requires us to train an **autoencoder** to interpret a **large language model** (LLM) on a specific **topic** and conduct **intervention experiments**.
 
 ---
+# Run Code
+
+- `exp_build_dataset.ipynb`: Generates `dataset.json`, containing 19K tokens and their corresponding features.  
+- `exp_train.ipynb`: Trains the SAE and produces `token_feature_count.json`, which records how often each feature is activated for each token.  
+- `exp_intervene.ipynb`: Adjusts features to control the LLM's output.
+
+> ⚠️ Generating `dataset.json` and `token_feature_count.json` can be slow.  
+> You can download these files and the trained model from the following link:  
+> https://drive.google.com/drive/folders/1kxUiiE06ZV_dKm-MTSR7QBiIf1BaSSVH?usp=sharing
+
+
+---
 
 # current progress
 
@@ -49,11 +61,11 @@ prompt += "The story should contain at most 50 words"
   - Output: 896
 
 ### Training result
-![train_val_mse Curve](./model/20250328-035329/train_val_mse.png)
+![train_val_mse Curve](./asset/train_val_mse.png)
 
-![l1_vs_mse](./model/20250328-035329/l1_vs_mse.png)
+![l1_vs_mse](./asset/l1_vs_mse.png)
 
-![activated features for car](./activated_features_car.png)
+![activated features for car](./asset/activated_features_car.png)
 
 
 ## 4. Intervention Experiment
