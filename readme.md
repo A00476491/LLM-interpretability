@@ -93,18 +93,15 @@ prompt += "The story should contain at most 50 words"
 **Q:** Generally, which is smaller, a car or a train?  
 **A:** *car.*
 
----
-
 **Activate "train":**  
 **Q:** Generally, which is smaller, a car or a train?  
 **A:** *train*
 
----
-
 **Suppress "car":**  
 **Q:** Generally, which is smaller, a car or a train?  
 **A:** *a train*
-
+  
+---
 
 ### Diverse Answer Control
 
