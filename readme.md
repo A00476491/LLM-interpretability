@@ -1,6 +1,6 @@
 # What do we need to do?
 
-This assignment requires us to train an **autoencoder** to interpret a **large language model** (LLM) on a specific **topic** and conduct **intervention experiments**.
+This assignment requires us to train an **autoencoder** to interpret a **large language model** (LLM) on a specific or mulitple **topics** and conduct **intervention experiments**.
 
 ---
 # Run Code
@@ -70,46 +70,71 @@ prompt += "The story should contain at most 50 words"
 
 ## 4. Intervention Experiment
 
-### Model Flow Overview
-
-- **Original**:  
+- **Original** *(no intervention)*:  
   `LLM layer15 -> x -> LLM layer16`
 
-- **Through SAE only** (no intervention):  
-  `LLM layer15 -> SAE(x) -> LLM layer16`
-
-- **With Feature Activation** *(intervention applied)*:  
+- **token Activation** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
-  z = z / 2  # suppress all features
-  z[related_feature_index] += 1.0  # activate selected feature
+  z = z + a * v
+  x_modified = SAE.decode(z)
+
+- **token suppress** *(intervention applied)*:  
+  ```python
+  z = SAE.encode(x)
+  z = z - b * v
   x_modified = SAE.decode(z)
 
 ---
 
-### One Example
+### Control for multiple-choice questions
 
-#### 🔹 Original Output:
-**Q:** Generally, which is bigger, a car or a bus?  
-**A:** *Bus.*
-
----
-
-#### 🔹 Through SAE (No Intervention):
-**Q:** Generally, which is bigger, a car or a bus?  
-**A:** *It depends on the size and weight of the vehicle.*
+**Original Output:**  
+**Q:** Generally, which is smaller, a car or a train?  
+**A:** *car.*
 
 ---
 
-#### 🔹 Activating Features of " car":
-**Q:** Generally, which is bigger, a car or a bus?  
-**A:** *a car*
+**Activate "train":**  
+**Q:** Generally, which is smaller, a car or a train?  
+**A:** *train*
 
 ---
 
-#### 🔹 Activating Features of " bus":
-**Q:** Generally, which is bigger, a car or a bus?  
-**A:** *a bus. It is a more, crowded ...*
+**Suppress "car":**  
+**Q:** Generally, which is smaller, a car or a train?  
+**A:** *a train*
+
+
+### Diverse Answer Control
+
+#### 🔹 Content Control
+
+**Activate `slowly`:**  
+Q: Imagine a traffic scene.  
+A: As the sun sets over the city, **a steady stream of cars** passes by, honing through the streets. The vehicles are a steady, rhythmic pattern, weaving through the city **like a slow, deliberate dance**. The cars are a mix of red, green, and yellow, as if on a parade down the road.
+
+**Activate `quickly`:**  
+Q: Imagine a traffic scene.  
+A: A driver is driving through a **busy intersection**, trying to navigate through a jam of cars. **The traffic is moving at a high speed**, with many vehicles trying to make their way through the narrow lanes. The driver is trying to **make a quick decision** to avoid a collision, but is struggling to make a decision.
+
+#### 🔹 Perspective/Style Control
+
+**Activate `feeling`:**  
+Q: Imagine a traffic scene.  
+A: A bustling city filled with cars and people as the sun sets casting a golden glow over the city skyline. The traffic is heavy with cars honking and horns as people rushing to their destinations or trying to find their way through the city. **The city is a vibrant and dynamic place with its streets and buildings bustling with life**.
+
+#### 🔹 Lexical Insertion
+
+**Activate `glow`:**  
+Q: Imagine a traffic scene.  
+A: Traffic patterns are chaotic and unpredictable, with cars and buses moving in waves and lines, and pedestrians and cyclists jostling for space. **The sun is high and casting a golden glow over the landscape, but it's not enough to illuminate the road**. The sky is a shade of orange and pink, with clouds and raindrops dancing in the sunlight.
+
+#### 🔹 Semantic Association
+
+**Activate `day`:**  
+Q: Imagine a traffic scene.  
+A: In a bustling city, a driver is driving through a congested intersection. The driver is **late for a crucial meeting**, and the traffic is jammed with cars, trucks, and buses. The driver must navigate through the traffic, **trying to find a way to reach their destination before the meeting**.
 
 
 # Areas for Improvement
