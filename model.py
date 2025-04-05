@@ -52,6 +52,7 @@ if __name__ == '__main__':
 
     sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
     sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
+    print(sae_model)
 
     dummy_input = torch.rand(1, 896)
     with torch.no_grad():

@@ -50,25 +50,25 @@ def generate_stories(lm, sentences, save_dir='./data/dataset.json'):
     structure of stories
     {
         transportation1: {
-            First sentence1 : [[token1, feature1], [token2, feature2], ...]
-            First sentence2 : [[token1, feature1], [token2, feature2], ...]
+            First sentence1 : [[token1, activation1], [token2, activation2], ...]
+            First sentence2 : [[token1, activation1], [token2, activation2], ...]
             ...
-            First sentence10 : [[token1, feature1], [token2, feature2], ...]
+            First sentence10 : [[token1, activation1], [token2, activation2], ...]
             }
         transportation2: {
-            First sentence1 : [[token1, feature1], [token2, feature2], ...]
-            First sentence2 : [[token1, feature1], [token2, feature2], ...]
+            First sentence1 : [[token1, activation1], [token2, activation2], ...]
+            First sentence2 : [[token1, activation1], [token2, activation2], ...]
             ...
-            First sentence10 : [[token1, feature1], [token2, feature2], ...]
+            First sentence10 : [[token1, activation1], [token2, activation2], ...]
             }
             
         ...
 
         transportation30: {
-            First sentence1 : [[token1, feature1], [token2, feature2], ...]
-            First sentence2 : [[token1, feature1], [token2, feature2], ...]
+            First sentence1 : [[token1, activation1], [token2, activation2], ...]
+            First sentence2 : [[token1, activation1], [token2, activation2], ...]
             ...
-            First sentence10 : [[token1, feature1], [token2, feature2], ...]
+            First sentence10 : [[token1, activation1], [token2, activation2], ...]
             }
     }
     '''
@@ -110,8 +110,8 @@ if __name__ == '__main__':
     stories = generate_stories(lm, sentences)
 
     # test case
-    # story = stories['Car']['The Car is parked outside the building.']
-    # print(f"Story: {tokenizer.decode([int(token[0]) for token in story], skip_special_tokens=True)}")
+    story = stories['Car']['The Car is parked outside the building.']
+    print(f"Story: {tokenizer.decode([int(token[0]) for token in story], skip_special_tokens=True)}")
 
 
 

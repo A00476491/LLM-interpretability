@@ -147,4 +147,5 @@ class Intervene:
 if __name__ == '__main__':
 
     exp =  Intervene(sae_model_dir='./model/20250403-041718/best_model.pth')
+    exp.case1()
     exp.case2()

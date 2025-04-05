@@ -102,12 +102,9 @@ def plot_token_feature_distribution(token_feature_table, token_id):
 
 if __name__ == '__main__':
 
-    # sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
-    # sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
-    # token_feature_table = build_token_feature_table(sae_model)
-
-    with open('./data/token_feature_table.json', 'r') as f:
-        token_feature_table = json.load(f)
+    sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
+    sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
+    token_feature_table = build_token_feature_table(sae_model)
 
     print(f"{'car'}: 1803")
     plot_token_feature_distribution(token_feature_table, '1803')

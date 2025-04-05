@@ -1,0 +1,422 @@
+[
+  {
+    "Car": [
+      "I saw a Car on the way to school.",
+      "The Car is parked outside the building.",
+      "Have you ever ridden a Car?",
+      "He repaired his Car last weekend.",
+      "The Car was moving very fast.",
+      "A Car passed by while we were walking.",
+      "They bought a new Car last month.",
+      "Driving a Car requires a special license.",
+      "The Car helped in the emergency situation.",
+      "She dreams of owning a Car someday."
+    ]
+  },
+  {
+    "Bus": [
+      "I saw a Bus on the way to school.",
+      "The Bus is parked outside the building.",
+      "Have you ever ridden a Bus?",
+      "He repaired his Bus last weekend.",
+      "The Bus was moving very fast.",
+      "A Bus passed by while we were walking.",
+      "They bought a new Bus last month.",
+      "Driving a Bus requires a special license.",
+      "The Bus helped in the emergency situation.",
+      "She dreams of owning a Bus someday."
+    ]
+  },
+  {
+    "Truck": [
+      "I saw a Truck on the way to school.",
+      "The Truck is parked outside the building.",
+      "Have you ever ridden a Truck?",
+      "He repaired his Truck last weekend.",
+      "The Truck was moving very fast.",
+      "A Truck passed by while we were walking.",
+      "They bought a new Truck last month.",
+      "Driving a Truck requires a special license.",
+      "The Truck helped in the emergency situation.",
+      "She dreams of owning a Truck someday."
+    ]
+  },
+  {
+    "Motorcycle": [
+      "I saw a Motorcycle on the way to school.",
+      "The Motorcycle is parked outside the building.",
+      "Have you ever ridden a Motorcycle?",
+      "He repaired his Motorcycle last weekend.",
+      "The Motorcycle was moving very fast.",
+      "A Motorcycle passed by while we were walking.",
+      "They bought a new Motorcycle last month.",
+      "Driving a Motorcycle requires a special license.",
+      "The Motorcycle helped in the emergency situation.",
+      "She dreams of owning a Motorcycle someday."
+    ]
+  },
+  {
+    "Bicycle": [
+      "I saw a Bicycle on the way to school.",
+      "The Bicycle is parked outside the building.",
+      "Have you ever ridden a Bicycle?",
+      "He repaired his Bicycle last weekend.",
+      "The Bicycle was moving very fast.",
+      "A Bicycle passed by while we were walking.",
+      "They bought a new Bicycle last month.",
+      "Driving a Bicycle requires a special license.",
+      "The Bicycle helped in the emergency situation.",
+      "She dreams of owning a Bicycle someday."
+    ]
+  },
+  {
+    "Scooter": [
+      "I saw a Scooter on the way to school.",
+      "The Scooter is parked outside the building.",
+      "Have you ever ridden a Scooter?",
+      "He repaired his Scooter last weekend.",
+      "The Scooter was moving very fast.",
+      "A Scooter passed by while we were walking.",
+      "They bought a new Scooter last month.",
+      "Driving a Scooter requires a special license.",
+      "The Scooter helped in the emergency situation.",
+      "She dreams of owning a Scooter someday."
+    ]
+  },
+  {
+    "Van": [
+      "I saw a Van on the way to school.",
+      "The Van is parked outside the building.",
+      "Have you ever ridden a Van?",
+      "He repaired his Van last weekend.",
+      "The Van was moving very fast.",
+      "A Van passed by while we were walking.",
+      "They bought a new Van last month.",
+      "Driving a Van requires a special license.",
+      "The Van helped in the emergency situation.",
+      "She dreams of owning a Van someday."
+    ]
+  },
+  {
+    "Tractor": [
+      "I saw a Tractor on the way to school.",
+      "The Tractor is parked outside the building.",
+      "Have you ever ridden a Tractor?",
+      "He repaired his Tractor last weekend.",
+      "The Tractor was moving very fast.",
+      "A Tractor passed by while we were walking.",
+      "They bought a new Tractor last month.",
+      "Driving a Tractor requires a special license.",
+      "The Tractor helped in the emergency situation.",
+      "She dreams of owning a Tractor someday."
+    ]
+  },
+  {
+    "Ambulance": [
+      "I saw a Ambulance on the way to school.",
+      "The Ambulance is parked outside the building.",
+      "Have you ever ridden a Ambulance?",
+      "He repaired his Ambulance last weekend.",
+      "The Ambulance was moving very fast.",
+      "A Ambulance passed by while we were walking.",
+      "They bought a new Ambulance last month.",
+      "Driving a Ambulance requires a special license.",
+      "The Ambulance helped in the emergency situation.",
+      "She dreams of owning a Ambulance someday."
+    ]
+  },
+  {
+    "Fire truck": [
+      "I saw a Fire truck on the way to school.",
+      "The Fire truck is parked outside the building.",
+      "Have you ever ridden a Fire truck?",
+      "He repaired his Fire truck last weekend.",
+      "The Fire truck was moving very fast.",
+      "A Fire truck passed by while we were walking.",
+      "They bought a new Fire truck last month.",
+      "Driving a Fire truck requires a special license.",
+      "The Fire truck helped in the emergency situation.",
+      "She dreams of owning a Fire truck someday."
+    ]
+  },
+  {
+    "Police car": [
+      "I saw a Police car on the way to school.",
+      "The Police car is parked outside the building.",
+      "Have you ever ridden a Police car?",
+      "He repaired his Police car last weekend.",
+      "The Police car was moving very fast.",
+      "A Police car passed by while we were walking.",
+      "They bought a new Police car last month.",
+      "Driving a Police car requires a special license.",
+      "The Police car helped in the emergency situation.",
+      "She dreams of owning a Police car someday."
+    ]
+  },
+  {
+    "RV / Motorhome": [
+      "I saw a RV / Motorhome on the way to school.",
+      "The RV / Motorhome is parked outside the building.",
+      "Have you ever ridden a RV / Motorhome?",
+      "He repaired his RV / Motorhome last weekend.",
+      "The RV / Motorhome was moving very fast.",
+      "A RV / Motorhome passed by while we were walking.",
+      "They bought a new RV / Motorhome last month.",
+      "Driving a RV / Motorhome requires a special license.",
+      "The RV / Motorhome helped in the emergency situation.",
+      "She dreams of owning a RV / Motorhome someday."
+    ]
+  },
+  {
+    "Golf cart": [
+      "I saw a Golf cart on the way to school.",
+      "The Golf cart is parked outside the building.",
+      "Have you ever ridden a Golf cart?",
+      "He repaired his Golf cart last weekend.",
+      "The Golf cart was moving very fast.",
+      "A Golf cart passed by while we were walking.",
+      "They bought a new Golf cart last month.",
+      "Driving a Golf cart requires a special license.",
+      "The Golf cart helped in the emergency situation.",
+      "She dreams of owning a Golf cart someday."
+    ]
+  },
+  {
+    "ATV / Quad bike": [
+      "I saw a ATV / Quad bike on the way to school.",
+      "The ATV / Quad bike is parked outside the building.",
+      "Have you ever ridden a ATV / Quad bike?",
+      "He repaired his ATV / Quad bike last weekend.",
+      "The ATV / Quad bike was moving very fast.",
+      "A ATV / Quad bike passed by while we were walking.",
+      "They bought a new ATV / Quad bike last month.",
+      "Driving a ATV / Quad bike requires a special license.",
+      "The ATV / Quad bike helped in the emergency situation.",
+      "She dreams of owning a ATV / Quad bike someday."
+    ]
+  },
+  {
+    "Tank": [
+      "I saw a Tank on the way to school.",
+      "The Tank is parked outside the building.",
+      "Have you ever ridden a Tank?",
+      "He repaired his Tank last weekend.",
+      "The Tank was moving very fast.",
+      "A Tank passed by while we were walking.",
+      "They bought a new Tank last month.",
+      "Driving a Tank requires a special license.",
+      "The Tank helped in the emergency situation.",
+      "She dreams of owning a Tank someday."
+    ]
+  },
+  {
+    "Train": [
+      "I saw a Train on the way to school.",
+      "The Train is parked outside the building.",
+      "Have you ever ridden a Train?",
+      "He repaired his Train last weekend.",
+      "The Train was moving very fast.",
+      "A Train passed by while we were walking.",
+      "They bought a new Train last month.",
+      "Driving a Train requires a special license.",
+      "The Train helped in the emergency situation.",
+      "She dreams of owning a Train someday."
+    ]
+  },
+  {
+    "Subway / Metro": [
+      "I saw a Subway / Metro on the way to school.",
+      "The Subway / Metro is parked outside the building.",
+      "Have you ever ridden a Subway / Metro?",
+      "He repaired his Subway / Metro last weekend.",
+      "The Subway / Metro was moving very fast.",
+      "A Subway / Metro passed by while we were walking.",
+      "They bought a new Subway / Metro last month.",
+      "Driving a Subway / Metro requires a special license.",
+      "The Subway / Metro helped in the emergency situation.",
+      "She dreams of owning a Subway / Metro someday."
+    ]
+  },
+  {
+    "Tram / Streetcar": [
+      "I saw a Tram / Streetcar on the way to school.",
+      "The Tram / Streetcar is parked outside the building.",
+      "Have you ever ridden a Tram / Streetcar?",
+      "He repaired his Tram / Streetcar last weekend.",
+      "The Tram / Streetcar was moving very fast.",
+      "A Tram / Streetcar passed by while we were walking.",
+      "They bought a new Tram / Streetcar last month.",
+      "Driving a Tram / Streetcar requires a special license.",
+      "The Tram / Streetcar helped in the emergency situation.",
+      "She dreams of owning a Tram / Streetcar someday."
+    ]
+  },
+  {
+    "Monorail": [
+      "I saw a Monorail on the way to school.",
+      "The Monorail is parked outside the building.",
+      "Have you ever ridden a Monorail?",
+      "He repaired his Monorail last weekend.",
+      "The Monorail was moving very fast.",
+      "A Monorail passed by while we were walking.",
+      "They bought a new Monorail last month.",
+      "Driving a Monorail requires a special license.",
+      "The Monorail helped in the emergency situation.",
+      "She dreams of owning a Monorail someday."
+    ]
+  },
+  {
+    "Airplane": [
+      "I saw a Airplane on the way to school.",
+      "The Airplane is parked outside the building.",
+      "Have you ever ridden a Airplane?",
+      "He repaired his Airplane last weekend.",
+      "The Airplane was moving very fast.",
+      "A Airplane passed by while we were walking.",
+      "They bought a new Airplane last month.",
+      "Driving a Airplane requires a special license.",
+      "The Airplane helped in the emergency situation.",
+      "She dreams of owning a Airplane someday."
+    ]
+  },
+  {
+    "Helicopter": [
+      "I saw a Helicopter on the way to school.",
+      "The Helicopter is parked outside the building.",
+      "Have you ever ridden a Helicopter?",
+      "He repaired his Helicopter last weekend.",
+      "The Helicopter was moving very fast.",
+      "A Helicopter passed by while we were walking.",
+      "They bought a new Helicopter last month.",
+      "Driving a Helicopter requires a special license.",
+      "The Helicopter helped in the emergency situation.",
+      "She dreams of owning a Helicopter someday."
+    ]
+  },
+  {
+    "Hot air balloon": [
+      "I saw a Hot air balloon on the way to school.",
+      "The Hot air balloon is parked outside the building.",
+      "Have you ever ridden a Hot air balloon?",
+      "He repaired his Hot air balloon last weekend.",
+      "The Hot air balloon was moving very fast.",
+      "A Hot air balloon passed by while we were walking.",
+      "They bought a new Hot air balloon last month.",
+      "Driving a Hot air balloon requires a special license.",
+      "The Hot air balloon helped in the emergency situation.",
+      "She dreams of owning a Hot air balloon someday."
+    ]
+  },
+  {
+    "Glider": [
+      "I saw a Glider on the way to school.",
+      "The Glider is parked outside the building.",
+      "Have you ever ridden a Glider?",
+      "He repaired his Glider last weekend.",
+      "The Glider was moving very fast.",
+      "A Glider passed by while we were walking.",
+      "They bought a new Glider last month.",
+      "Driving a Glider requires a special license.",
+      "The Glider helped in the emergency situation.",
+      "She dreams of owning a Glider someday."
+    ]
+  },
+  {
+    "Drone": [
+      "I saw a Drone on the way to school.",
+      "The Drone is parked outside the building.",
+      "Have you ever ridden a Drone?",
+      "He repaired his Drone last weekend.",
+      "The Drone was moving very fast.",
+      "A Drone passed by while we were walking.",
+      "They bought a new Drone last month.",
+      "Driving a Drone requires a special license.",
+      "The Drone helped in the emergency situation.",
+      "She dreams of owning a Drone someday."
+    ]
+  },
+  {
+    "Boat": [
+      "I saw a Boat on the way to school.",
+      "The Boat is parked outside the building.",
+      "Have you ever ridden a Boat?",
+      "He repaired his Boat last weekend.",
+      "The Boat was moving very fast.",
+      "A Boat passed by while we were walking.",
+      "They bought a new Boat last month.",
+      "Driving a Boat requires a special license.",
+      "The Boat helped in the emergency situation.",
+      "She dreams of owning a Boat someday."
+    ]
+  },
+  {
+    "Ship": [
+      "I saw a Ship on the way to school.",
+      "The Ship is parked outside the building.",
+      "Have you ever ridden a Ship?",
+      "He repaired his Ship last weekend.",
+      "The Ship was moving very fast.",
+      "A Ship passed by while we were walking.",
+      "They bought a new Ship last month.",
+      "Driving a Ship requires a special license.",
+      "The Ship helped in the emergency situation.",
+      "She dreams of owning a Ship someday."
+    ]
+  },
+  {
+    "Yacht": [
+      "I saw a Yacht on the way to school.",
+      "The Yacht is parked outside the building.",
+      "Have you ever ridden a Yacht?",
+      "He repaired his Yacht last weekend.",
+      "The Yacht was moving very fast.",
+      "A Yacht passed by while we were walking.",
+      "They bought a new Yacht last month.",
+      "Driving a Yacht requires a special license.",
+      "The Yacht helped in the emergency situation.",
+      "She dreams of owning a Yacht someday."
+    ]
+  },
+  {
+    "Ferry": [
+      "I saw a Ferry on the way to school.",
+      "The Ferry is parked outside the building.",
+      "Have you ever ridden a Ferry?",
+      "He repaired his Ferry last weekend.",
+      "The Ferry was moving very fast.",
+      "A Ferry passed by while we were walking.",
+      "They bought a new Ferry last month.",
+      "Driving a Ferry requires a special license.",
+      "The Ferry helped in the emergency situation.",
+      "She dreams of owning a Ferry someday."
+    ]
+  },
+  {
+    "Submarine": [
+      "I saw a Submarine on the way to school.",
+      "The Submarine is parked outside the building.",
+      "Have you ever ridden a Submarine?",
+      "He repaired his Submarine last weekend.",
+      "The Submarine was moving very fast.",
+      "A Submarine passed by while we were walking.",
+      "They bought a new Submarine last month.",
+      "Driving a Submarine requires a special license.",
+      "The Submarine helped in the emergency situation.",
+      "She dreams of owning a Submarine someday."
+    ]
+  },
+  {
+    "Jet ski": [
+      "I saw a Jet ski on the way to school.",
+      "The Jet ski is parked outside the building.",
+      "Have you ever ridden a Jet ski?",
+      "He repaired his Jet ski last weekend.",
+      "The Jet ski was moving very fast.",
+      "A Jet ski passed by while we were walking.",
+      "They bought a new Jet ski last month.",
+      "Driving a Jet ski requires a special license.",
+      "The Jet ski helped in the emergency situation.",
+      "She dreams of owning a Jet ski someday."
+    ]
+  }
+]

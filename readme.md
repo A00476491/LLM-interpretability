@@ -59,15 +59,15 @@ I saw a car on the way to school. As I drove, I noticed a familiar red car pulli
 
 
 ### Feature table for tokens
-Based on the autoencoder, for the tokens $X = \{x_1, x_2, \dots, x_i\}$ that appear in the story, we can collect features for each token.
+Based on the autoencoder, for the tokens $X = \{x_1, x_2, \dots, x_i\}$ that appear in the story, we can collect feature vectors for each token.
 
-The feature of a token is computed as:
+The feature vector of a token is computed as:
 
 $$
-\text{feature}(x_i) = \frac{1}{n} \sum_{j=1}^{n} z_{ij}
+\text{v}(x_i) = \frac{1}{n} \sum_{j=1}^{n} z_{ij}
 $$
 
-Note that a token $x_i$ may appear multiple times in the story, resulting in multiple corresponding $z_{ij}$.
+Note that a token $x_i$ may appear multiple times in the story, resulting in multiple corresponding latent vectors $z_{ij}$.
 
 ![activated features for car](./asset/activated_features_car.png)
 
@@ -77,13 +77,13 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 - **Original** *(no intervention)*:  
   `LLM layer15 -> x -> LLM layer16`
 
-- **token Activation** *(intervention applied)*:  
+- **Token Activation** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
   z = z + alpha * v
   x_modified = SAE.decode(z)
 
-- **token suppression** *(intervention applied)*:  
+- **Token suppression** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
   z = z - beta * v
@@ -91,7 +91,7 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 
 ---
 
-### Intervetion for multiple-choice questions
+### Intervetion for multiple-choice question
 
 **Original Output:**  
 **Q:** Generally, which is smaller, a car or a train?  
@@ -135,71 +135,18 @@ A: Traffic patterns are chaotic and unpredictable, with cars and buses moving in
 
 **Activate `day`:**  
 Q: Imagine a traffic scene.  
-A: In a bustling city, a driver is driving through a congested intersection. The driver is **late for a crucial meeting**, and the traffic is jammed with cars, trucks, and buses. The driver must navigate through the traffic, **trying to find a way to reach their destination before the meeting**.
+A: In a bustling city, a driver is driving through a congested intersection. The driver is **late for a crucial meeting**, and the traffic is jammed with cars, trucks, and buses. The driver must navigate through the traffic, **trying to find a way to reach the destination before the meeting**.
 
 
 
 # How about tied-weight?
 
 It's feasible
-$$
-\begin{aligned}
-x &= \begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}, \quad
-W = \begin{bmatrix}
-0.5164 & -0.3186 \\
--0.0609 & 0.2142 \\
-0.7021 & 0.5262
-\end{bmatrix} \\[6pt]
 
-z_{\text{pre-ReLU}} &= W^\top x =
-\begin{bmatrix}
-0.5164 & -0.0609 & 0.7021 \\
--0.3186 & 0.2142 & 0.5262
-\end{bmatrix}
-\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}
-= \begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix} \\[6pt]
-
-z &= \text{ReLU}(z_{\text{pre-ReLU}}) = \begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix} \\[6pt]
-
-\hat{x} &= W z =
-\begin{bmatrix}
-0.5164 & -0.3186 \\
--0.0609 & 0.2142 \\
-0.7021 & 0.5262
-\end{bmatrix}
-\begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix}
-= \begin{bmatrix} 1.0000 \\ 0.0000 \\ 2.0000 \end{bmatrix}
-\end{aligned}
-$$
-
+![tied_wwight1](./asset/tied_weight1.png)
 ---
+![tied_wwight2](./asset/tied_weight2.png)
 
-$$
-\begin{aligned}
-x &= \begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}, \quad
-W = \begin{bmatrix}
--0.13794 & 0.45446 \\
--0.01631 & 0.00000 \\
--0.18051 & 0.90891
-\end{bmatrix} \\
-z_{\text{pre-ReLU}} &= W^\top x =
-\begin{bmatrix}
--0.13794 & -0.01631 & -0.18051 \\
-0.45446 & 0.00000 & 0.90891
-\end{bmatrix}
-\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}
-= \begin{bmatrix} -0.5353 \\ 2.2004 \end{bmatrix} \\
-z &= \text{ReLU}(z_{\text{pre-ReLU}}) = \begin{bmatrix} 0.0000 \\ 2.2004 \end{bmatrix} \\
-\hat{x} &= W z =
-\begin{bmatrix}
--0.13794 & 0.45446 \\
--0.01631 & 0.00000 \\
--0.18051 & 0.90891
-\end{bmatrix}
-\begin{bmatrix} 0.0000 \\ 2.2004 \end{bmatrix}
-= \begin{bmatrix} 1.0000 \\ 0.0000 \\ 2.0000 \end{bmatrix}
-\end{aligned}
-$$
 
 ## 📚 Recent work of Sparse Autoencoders (SAE)
 
@@ -216,14 +163,13 @@ $$
   Introduces JumpReLU, which decouples the ReLU encoder from the gating mechanism. Improves reconstruction fidelity but finds that untied designs don’t always yield benefits.
 
 - [**GatedSAE**](https://arxiv.org/abs/2404.16014) — *DeepMind, 2024*  
-  **Type**: Untied weights  
+  **Type**: Untied weights across encoder and decoder
   Introduces a gated multiplicative encoder structure. Achieves better feature specialization and improved dictionary learning.
 
 ## Insights on Tied Weights
 
 - Reduce model memory usage by half without performance loss. [`Hoagy Cunningham`]  
 - Provide a better initialization for faster training. [`GatedSAE`]  
-- Serve as a form of regularization, helping mitigate overfitting.
 
 
 ![Training vs Validation MSE (first 100 epochs)](./asset/val_mse_comparison.png)
