@@ -181,6 +181,10 @@ The figure shows the training performance over the first 100 epochs. We observe 
 - Try advanced autoencoders: JumpReLU, GatedSAE, TopKSAE, Batch Top-K.
 - Monosemanticity is better. It makes it possible to find the meaning of a single feature.
 
+# Acknowledgements
+
+🙏  Special thanks to Greg and Somto for their valuable guidance and careful knowledge sharing.
+
 # Reference
 - **Assignment statement**: *assignment-4-brain-surgery.pdf*  
 - **Claude research**: [Scaling Monosemanticity](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html)  

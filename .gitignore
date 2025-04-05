@@ -1,5 +1,7 @@
 # Ignore everything in model/ and data/
 model/*
+!model/
+!model/.gitkeep
 
 data/*
 !data/transportation_sentences.json

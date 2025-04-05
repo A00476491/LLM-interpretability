@@ -1,5 +1,9 @@
 # Project File Descriptions
 
+## 📦 Pre-generated Data &  Model
+
+All required datasets and trained models can be downloaded from the following Google Drive link:  
+🔗 [Download here](https://drive.google.com/drive/folders/1kxUiiE06ZV_dKm-MTSR7QBiIf1BaSSVH?usp=drive_link)
 
 ### `dataset.py`
 - **Purpose**: Generates a dataset related to the topic of transportation using prompt and hook techniques.
