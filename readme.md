@@ -3,20 +3,6 @@
 This assignment requires us to train an **autoencoder** to interpret a **large language model** (LLM) on a specific or mulitple **topics** and conduct **intervention experiments**.
 
 ---
-# Run Code
-
-- `exp_build_dataset.ipynb`: Generates `dataset.json`, containing 19K tokens and their corresponding features.  
-- `exp_train.ipynb`: Trains the SAE and produces `token_feature_count.json`, which records how often each feature is activated for each token.  
-- `exp_intervene.ipynb`: Adjusts features to control the LLM's output.
-
-> ⚠️ Generating `dataset.json` and `token_feature_count.json` can be slow.  
-> You can download these files and the trained model from the following link:  
-> https://drive.google.com/drive/folders/1kxUiiE06ZV_dKm-MTSR7QBiIf1BaSSVH?usp=sharing
-
-
----
-
-# current progress
 
 ## 1. LLM: Qwen2.5-0.5B
 - **Model Size**: 542M parameters  
@@ -46,7 +32,7 @@ prompt += "The story should contain at most 50 words"
 ```
 - **Feature Generation**:
     - Use a hook to extract the activations from **decoder15** for the generated continuation tokens.
-    - got **19K** tokens with thier features (19K x 896).
+    - got **19K** tokens with thier activations (19K x 896).
 
 ## 3. Sparse Autoencoder: Vanilla Setting
 - **Structure**:
@@ -54,7 +40,7 @@ prompt += "The story should contain at most 50 words"
     z = nn.relu(nn.linear(input))
     output = nn.linear(z)
 - **Loss Function**:
-  - Mean Squared Error (MSE) + L1 Regularization
+  - MSEloss + $\lambda$ * L1 Regularization
 - **Dimensions**:
   - Input: 896
   - Latent: 896 x 20
@@ -64,6 +50,18 @@ prompt += "The story should contain at most 50 words"
 ![train_val_mse Curve](./asset/train_val_mse.png)
 
 ![l1_vs_mse](./asset/l1_vs_mse.png)
+
+
+### Feature table for tokens
+Based on the autoencoder, for the tokens $X = \{x_1, x_2, \dots, x_i\}$ that appear in the story, we can collect features for each token.
+
+The feature of a token is computed as:
+
+$$
+\text{feature}(x_i) = \frac{1}{n} \sum_{j=1}^{n} z_{ij}
+$$
+
+Note that a token $x_i$ may appear multiple times in the story, resulting in multiple corresponding $z_{ij}$.
 
 ![activated features for car](./asset/activated_features_car.png)
 
@@ -76,18 +74,18 @@ prompt += "The story should contain at most 50 words"
 - **token Activation** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
-  z = z + a * v
+  z = z + alpha * v
   x_modified = SAE.decode(z)
 
-- **token suppress** *(intervention applied)*:  
+- **token suppression** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
-  z = z - b * v
+  z = z - beta * v
   x_modified = SAE.decode(z)
 
 ---
 
-### Control for multiple-choice questions
+### Intervetion for multiple-choice questions
 
 **Original Output:**  
 **Q:** Generally, which is smaller, a car or a train?  
@@ -134,14 +132,102 @@ Q: Imagine a traffic scene.
 A: In a bustling city, a driver is driving through a congested intersection. The driver is **late for a crucial meeting**, and the traffic is jammed with cars, trucks, and buses. The driver must navigate through the traffic, **trying to find a way to reach their destination before the meeting**.
 
 
+
+# How about tied-weight?
+
+It's feasible
+$$
+\begin{aligned}
+x &= \begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}, \quad
+W = \begin{bmatrix}
+0.5164 & -0.3186 \\
+-0.0609 & 0.2142 \\
+0.7021 & 0.5262
+\end{bmatrix} \\[6pt]
+
+z_{\text{pre-ReLU}} &= W^\top x =
+\begin{bmatrix}
+0.5164 & -0.0609 & 0.7021 \\
+-0.3186 & 0.2142 & 0.5262
+\end{bmatrix}
+\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}
+= \begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix} \\[6pt]
+
+z &= \text{ReLU}(z_{\text{pre-ReLU}}) = \begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix} \\[6pt]
+
+\hat{x} &= W z =
+\begin{bmatrix}
+0.5164 & -0.3186 \\
+-0.0609 & 0.2142 \\
+0.7021 & 0.5262
+\end{bmatrix}
+\begin{bmatrix} 2.3482 \\ 0.6675 \end{bmatrix}
+= \begin{bmatrix} 1.0000 \\ 0.0000 \\ 2.0000 \end{bmatrix}
+\end{aligned}
+$$
+
+---
+
+$$
+\begin{aligned}
+x &= \begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}, \quad
+W = \begin{bmatrix}
+-0.13794 & 0.45446 \\
+-0.01631 & 0.00000 \\
+-0.18051 & 0.90891
+\end{bmatrix} \\
+z_{\text{pre-ReLU}} &= W^\top x =
+\begin{bmatrix}
+-0.13794 & -0.01631 & -0.18051 \\
+0.45446 & 0.00000 & 0.90891
+\end{bmatrix}
+\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix}
+= \begin{bmatrix} -0.5353 \\ 2.2004 \end{bmatrix} \\
+z &= \text{ReLU}(z_{\text{pre-ReLU}}) = \begin{bmatrix} 0.0000 \\ 2.2004 \end{bmatrix} \\
+\hat{x} &= W z =
+\begin{bmatrix}
+-0.13794 & 0.45446 \\
+-0.01631 & 0.00000 \\
+-0.18051 & 0.90891
+\end{bmatrix}
+\begin{bmatrix} 0.0000 \\ 2.2004 \end{bmatrix}
+= \begin{bmatrix} 1.0000 \\ 0.0000 \\ 2.0000 \end{bmatrix}
+\end{aligned}
+$$
+
+## 📚 Recent work of Sparse Autoencoders (SAE)
+
+- [**Hoagy Cunningham**](https://arxiv.org/abs/2309.08600v3) — *2023*  
+  **Type**: Tied weights  
+  One of the earliest and most influential works. Shows that sparse autoencoders can extract interpretable LLM features, such as *"sycophantic praise"* or *"the Golden Gate Bridge"*.
+
+- [**TopKSAE**](https://arxiv.org/abs/2406.04093) — *OpenAI, 2024*  
+  **Type**: Tied weights only for initialization  
+  Proposes a scalable sparse autoencoder using tied weights for initialization. Achieves strong interpretability and efficient training.
+
+- [**JumpReLU**](https://arxiv.org/abs/2407.14435) — *DeepMind, 2024*  
+  **Type**: Tied weights only for initialization  
+  Introduces JumpReLU, which decouples the ReLU encoder from the gating mechanism. Improves reconstruction fidelity but finds that untied designs don’t always yield benefits.
+
+- [**GatedSAE**](https://arxiv.org/abs/2404.16014) — *DeepMind, 2024*  
+  **Type**: Untied weights  
+  Introduces a gated multiplicative encoder structure. Achieves better feature specialization and improved dictionary learning.
+
+## Insights on Tied Weights
+
+- Reduce model memory usage by half without performance loss. [`Hoagy Cunningham`]  
+- Provide a better initialization for faster training. [`GatedSAE`]  
+- Serve as a form of regularization, helping mitigate overfitting.
+
+
+![Training vs Validation MSE (first 100 epochs)](./asset/val_mse_comparison.png)
+
+The figure shows the training performance over the first 100 epochs. We observe that the tied-weight model converges faster.
+
 # Areas for Improvement
 
 - Try advanced autoencoders: JumpReLU, GatedSAE, TopKSAE, Batch Top-K.
-- Use more reliable metrics like L0 norm,  CE difference.
-- Train on a larger dataset.
-- Apply to larger LLMs.
-- Explore more diverse and interesting intervention cases.
-
+- Monosemanticity is better. It makes it possible to find the meaning of a single feature.
 
 # Reference
 - **Assignment statement**: *assignment-4-brain-surgery.pdf*  
@@ -151,10 +237,11 @@ A: In a bustling city, a driver is driving through a congested intersection. The
   - [SAELens by jbloomAus](https://github.com/jbloomAus/SAELens/tree/main)  
 - **Blog overview**: [SAE Intuitions – A brief introduction to SAE in LLMs](https://adamkarvonen.github.io/machine_learning/2024/06/11/sae-intuitions.html)  
 - **Recent SAE variants**:  
-  - [`GatedSAE`](https://arxiv.org/abs/2404.16014) — Rajamanoharan et al., 2024  
-  - [`TopKSAE`](https://arxiv.org/abs/2406.04093) — Gao et al., 2024  
+  - [`GatedSAE`](https://arxiv.org/abs/2404.16014) — Deepmind, 2024  
+  - [`TopKSAE`](https://arxiv.org/abs/2406.04093) — Openai, 2024  
   - [`BatchTopKSAE`](https://arxiv.org/abs/2412.06410) — Bussmann et al., 2024  
-  - [`JumpReLU`](https://arxiv.org/abs/2407.14435) — Rajamanoharan et al., 2024
+  - [`JumpReLU`](https://arxiv.org/abs/2407.14435) — Deepmind, 2024
+  - [Hoagy Cunningham et al.](https://arxiv.org/abs/2309.08600v3), 2023
 
 
 

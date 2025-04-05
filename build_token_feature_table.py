@@ -25,13 +25,13 @@ def find_non_zero(vec, topnum=30, disp=True):
 # Extracts and saves average sparse feature vectors for each token using a trained Sparse Autoencoder (SAE).
 def build_token_feature_table(sae_model, 
                               data_dir='./data/dataset.json',
-                              output_dir='./data/token_feature_tabel.json'):
+                              output_dir='./data/token_feature_table.json'):
     # Load the raw dataset containing stories, each with multiple tokens and associated vectors.
     with open(data_dir, 'r') as file:
         data_raw = json.load(file)
 
     # Dictionary to accumulate feature vectors per token_id
-    token_feature_tabel = {}
+    token_feature_table = {}
 
     # Set the SAE model to evaluation mode (no dropout, no gradient updates)
     sae_model.eval()
@@ -52,53 +52,64 @@ def build_token_feature_table(sae_model,
                 token_id = str(v2[i][0])
 
                 # Initialize feature vector for this token ID if not already present
-                if token_id not in token_feature_tabel:
-                    token_feature_tabel[token_id] = np.zeros(sae_model.hidden_dim, dtype=np.float32)
+                if token_id not in token_feature_table:
+                    token_feature_table[token_id] = np.zeros(sae_model.hidden_dim, dtype=np.float32)
 
                 # Normalize the sparse activation values (like softmax)
                 topn_values = np.array(topn_values, dtype=np.float32)
                 topn_values = topn_values / (topn_values.sum() + 1e-8)
 
                 # Accumulate the normalized activation values at the corresponding indices
-                token_feature_tabel[token_id][topn_indices] += topn_values
+                token_feature_table[token_id][topn_indices] += topn_values
 
     # Normalize the accumulated feature vector for each token so the sum equals 1
-    for token_id, feature_vec in token_feature_tabel.items():
-        token_feature_tabel[token_id] = (feature_vec / (feature_vec.sum() + 1e-8)).tolist()
+    for token_id, feature_vec in token_feature_table.items():
+        token_feature_table[token_id] = (feature_vec / (feature_vec.sum() + 1e-8)).tolist()
 
     # Save the resulting token feature vectors to JSON file
     with open(output_dir, 'w', encoding='utf-8') as f:
-        json.dump(token_feature_tabel, f, indent=4, ensure_ascii=False)
+        json.dump(token_feature_table, f, indent=4, ensure_ascii=False)
 
     print(f"Token feature extraction complete. Saved to {output_dir}")
 
-    return token_feature_tabel
+    return token_feature_table
 
 
-def plot_token_feature_distribution(token_feature_tabel, token_id):
+def plot_token_feature_distribution(token_feature_table, token_id):
 
-    if token_id not in token_feature_tabel:
-        print(f"Token ID {token_id} doesn't exsit in dataset。")
+    if token_id not in token_feature_table:
+        print(f"Token ID {token_id} doesn't exist in dataset.")
         return
 
-    feature_distribution = token_feature_tabel[token_id]
+    feature_distribution = token_feature_table[token_id]
 
     plt.figure(figsize=(12, 4))
-    plt.bar(range(len(feature_distribution)), feature_distribution)
-    plt.title(f"Feature Magnitude for Token ID {token_id}")
-    plt.xlabel("Feature Index")
+    plt.bar(
+        range(len(feature_distribution)),
+        feature_distribution,
+        color="red"
+    )
+    plt.title(f"Feature Magnitude for Token ID {token_id} (Car)", fontsize=16)
+    plt.xlabel("Feature Index", fontsize=12)
+    plt.ylabel("Value", fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.ylim(0, 0.025)
     plt.tight_layout()
-    plt.savefig("./asset/activated_features_car.png", dpi=600)
-
+    plt.savefig("./asset/activated_features_car.png", dpi=900)
+    plt.close()
 
 
 if __name__ == '__main__':
 
-    sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
-    sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
-    token_feature_tabel = build_token_feature_table(sae_model)
+    # sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
+    # sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
+    # token_feature_table = build_token_feature_table(sae_model)
+
+    with open('./data/token_feature_table.json', 'r') as f:
+        token_feature_table = json.load(f)
 
     print(f"{'car'}: 1803")
-    plot_token_feature_distribution(token_feature_tabel, '1803')
+    plot_token_feature_distribution(token_feature_table, '1803')
 
 
