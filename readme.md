@@ -23,13 +23,19 @@ This assignment requires us to train an **autoencoder** to interpret a **large l
     *"The ***Bus*** is parked outside the building."*
   - Use Qwen2.5-0.5B to do text continuation to get 300 short stories realated to transportation.
 
-### Prompt Format:
+### 🧾 Prompt Format
+
 ```python
 sentence = "I saw a car on the way to school."
 prompt = f"Give me a short story that begins with: {sentence} \n\n"
 prompt += "Try to include more transportation-related words in the story.\n\n"
 prompt += "The story should contain at most 50 words"
 ```
+
+### ✍️ Example Story Output
+
+I saw a car on the way to school. As I drove, I noticed a familiar red car pulling up to the curb. The driver was a young man with a smile on his face. He was carrying a backpack and a backpack of books. I parked my car and walked towards him. He introduced himself and we started talking about his day.
+
 - **Feature Generation**:
     - Use a hook to extract the activations from **decoder15** for the generated continuation tokens.
     - got **19K** tokens with thier activations (19K x 896).
