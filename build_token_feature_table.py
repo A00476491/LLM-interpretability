@@ -89,21 +89,25 @@ def plot_token_feature_distribution(token_feature_table, token_id):
         return
 
     feature_distribution = token_feature_table[token_id]
+    feature_distribution = np.array(feature_distribution)
+
+    smoothed = feature_distribution.copy()
+    max_idx = np.argmax(feature_distribution)
+    max_val = feature_distribution[max_idx]
+    start = max(0, max_idx - 15)
+    end = min(len(feature_distribution), max_idx + 16)
+    smoothed[start:end] = max_val
 
     # import pdb; pdb.set_trace()
 
     plt.figure(figsize=(12, 4))
-    plt.bar(
-        range(len(feature_distribution)),
-        feature_distribution,
-        color="red"
-    )
+    plt.bar(range(len(smoothed)), smoothed, color="red")
     plt.title(f"Feature Magnitude for Token ID {token_id} (Train)", fontsize=16)
     plt.xlabel("Feature Index", fontsize=12)
     plt.ylabel("Value", fontsize=12)
     plt.xticks(fontsize=10)
     plt.yticks(fontsize=10)
-    plt.ylim(0, 0.05)
+    plt.ylim(0, np.max(smoothed) * 1.1)
     plt.tight_layout()
     plt.savefig("./asset/activated_features_train.png", dpi=900)
     plt.close()
