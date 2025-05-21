@@ -103,32 +103,32 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 
 **Activate `Nothing`:**  
 
-Q: Imagine a traffic scene.
+Q: Imagine a traffic scene.  
 A: In a bustling city, vehicles are moving at high speeds, with cars, buses, and motorcycles all rushing towards each other. The traffic is chaotic, with drivers honking their horns and weaving through intersections. The sky is filled with the sound of sirens, and the air is thick with the smell of exhaust fumes.
 
 
 **Activate `chatting`:**  
 
-Q: Imagine a traffic scene.
-A: In the bustling city, a group of pedestrians are rushing through the busy intersection. They are all wearing mismatched clothing, each carrying their own bags and phones. The sun is shining, casting a warm glow on the pavement. The traffic is heavy, with cars honking and horns blaring. **The sound of people talking and laughing fills the air**.   
+Q: Imagine a traffic scene.  
+A: In the bustling city, ***a group of pedestrians*** are rushing through the busy intersection. They are all wearing mismatched clothing, each carrying their own bags and phones. The sun is shining, casting a warm glow on the pavement. The traffic is heavy, with cars honking and horns blaring. ***The sound of people talking and laughing fills the air***.   
 
 
 **Activate `helpful`:**  
 
-Q: Imagine a traffic scene.
-A: Traffic congestion is a common occurrence in urban areas, where vehicles are jammed with people trying to reach their destinations. This can lead to delays, increased traffic, and higher emissions. To mitigate this issue, **cities often implement traffic management strategies** such as traffic lights, signal timing, and congestion pricing. Additionally, **public transportation systems can be improved** to reduce reliance on personal vehicles.
+Q: Imagine a traffic scene.  
+A: Traffic congestion is a common occurrence in urban areas, where vehicles are jammed with people trying to reach their destinations. This can lead to delays, increased traffic, and higher emissions. To mitigate this issue, ***cities often implement traffic management strategies*** such as traffic lights, signal timing, and congestion pricing. Additionally, ***public transportation systems can be improved*** to reduce reliance on personal vehicles.
 
 
 **Activate `brightly`:**  
 
-Q: Imagine a traffic scene.
-A: In the busy city, cars and pedestrians are rushing, with traffic lights and signs guiding the flow. The streets are narrow and busy, with cars and buses weaving through the intersections. **The sky is a bright blue**, with a few clouds overhead, casting a gray and ominous look on the city. The city is bustling, with people and vehicles everywhere, making it hard to see the distance.  
+Q: Imagine a traffic scene.  
+A: In the busy city, cars and pedestrians are rushing, with traffic lights and signs guiding the flow. The streets are narrow and busy, with cars and buses weaving through the intersections. ***The sky is a bright blue***, with a few clouds overhead, casting a gray and ominous look on the city. The city is bustling, with people and vehicles everywhere, making it hard to see the distance.  
 
 
 **Activate `protect`:**  
 
-Q: Imagine a traffic scene.
-A: A car is moving slowly on a busy street, honking its horn and weaving through oncoming traffic. **The driver is trying to avoid hitting a pedestrian, who is crossing the road**. The scene is chaotic, with cars and pedestrians moving at a high speed.
+Q: Imagine a traffic scene.  
+A: A car is moving slowly on a busy street, honking its horn and weaving through oncoming traffic. ***The driver is trying to avoid hitting a pedestrian, who is crossing the road***. The scene is chaotic, with cars and pedestrians moving at a high speed.
 
 
 # How about tied-weight?
