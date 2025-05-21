@@ -6,7 +6,7 @@ from model import SparseAutoencoder
 class Intervene:
     def __init__(self, 
                  sae_model_dir='./model/20250403-041718/best_model.pth',
-                 token_feature_tabel_dir='./data/token_feature_tabel.json'):
+                 token_feature_tabel_dir='./data/token_feature_table.json'):
         # Load SAE model
         self.sae_model = SparseAutoencoder(input_dim=896, hidden_dim=896*20).cuda()
         self.sae_model.load_state_dict(torch.load(sae_model_dir))
@@ -21,13 +21,21 @@ class Intervene:
         # Load token-feature table
         with open(token_feature_tabel_dir, 'r', encoding='utf-8') as f:
             self.token_feature_table = json.load(f)
+        self.words = [self.get_word(k) for k in self.token_feature_table.keys() if self.get_word(k) != ""]
+        print(self.words)
 
     def hook_SAE(self, module, input, output):
         with torch.no_grad():
             output[0][0, -1, :], _ = self.sae_model(output[0][0, -1, :])
         return output
 
-    
+    def to_max_only_sparse_vector(self, vector):
+        
+        sparse_vec = torch.zeros_like(vector).cuda()
+        max_index = torch.argmax(vector)
+        sparse_vec[max_index] = vector[max_index]
+        return sparse_vec
+
     def make_hook_activate(self, token_id, scale=1, strength=15):
 
         def hook_activate(module, input, output):
@@ -35,8 +43,9 @@ class Intervene:
                 _, z = self.sae_model(output[0][0, -1, :])
                 z /= scale
                 token_vec = torch.Tensor(self.token_feature_table[token_id]).cuda()
-                z += strength * token_vec
+                z += strength * self.to_max_only_sparse_vector(token_vec)
                 output[0][0, -1, :] = self.sae_model.decode(z).reshape(-1)
+
             return output
         
         return hook_activate
@@ -47,7 +56,7 @@ class Intervene:
             with torch.no_grad():
                 _, z = self.sae_model(output[0][0, -1, :])
                 token_vec = torch.tensor(self.token_feature_table[token_id]).cuda()
-                z -= strength * token_vec
+                z -= strength * self.to_max_only_sparse_vector(token_vec)
                 z = torch.clamp(z, min=0)
                 output[0][0, -1, :] = self.sae_model.decode(z).reshape(-1)
             return output
@@ -103,6 +112,9 @@ class Intervene:
 
         return str(self.tokenizer(word, return_tensors="pt")\
                     ["input_ids"].numpy().tolist()[0][0])
+    
+    def get_word(self, token):
+            return self.tokenizer.decode([int(token)], skip_special_tokens=True)
 
     def case1(self):
 
@@ -119,6 +131,7 @@ class Intervene:
 
         print("\n=== Activate 'train' ===")
         token_id_train = self.get_token(" train")
+        print(token_id_train)
         self.handle = self.lm.model.layers[14].\
             register_forward_hook(self.make_hook_activate(token_id=token_id_train, strength=15))
         self.generate()
@@ -135,17 +148,21 @@ class Intervene:
         
         Question = 'Imagine a traffic scene.'
         Require = 'The answer is at most 50 words'
-        activated_words = [' slowly', ' quickly', ' feeling', ' glow', ' day', ' friends']
-        for word in activated_words:
+        # activated_words = self.words
+        # activated_words = [' slowly', ' quickly', ' feeling', ' glow', ' day', ' friends']
+        activated_words = [[None, -1], [' chatting', 10], [' helpful', 15], [' brightly', 15], [' protect', 15]]
+        for word, strength in activated_words:
             print(f'\n\nActivate {word}:\n')
-            token_id = self.get_token(word)
-            self.handle = self.lm.model.layers[14].\
-                register_forward_hook(self.make_hook_activate(token_id=token_id, strength=10))
+            if word is not None:
+                token_id = self.get_token(word)
+                self.handle = self.lm.model.layers[14].\
+                    register_forward_hook(self.make_hook_activate(token_id=token_id, strength=strength))
             self.generate(question=Question, require=Require)
-            self.handle.remove()
+            if word is not None:
+                self.handle.remove()
 
 if __name__ == '__main__':
 
     exp =  Intervene(sae_model_dir='./model/20250403-041718/best_model.pth')
     exp.case1()
-    exp.case2()
+    # exp.case2()

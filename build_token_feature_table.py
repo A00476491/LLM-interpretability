@@ -1,4 +1,5 @@
 import json
+import os
 import torch
 import numpy as np
 from model import SparseAutoencoder
@@ -26,6 +27,12 @@ def find_non_zero(vec, topnum=30, disp=True):
 def build_token_feature_table(sae_model, 
                               data_dir='./data/dataset.json',
                               output_dir='./data/token_feature_table.json'):
+    
+    if os.path.exists(output_dir):
+        with open(output_dir, 'r', encoding='utf-8') as f:
+            token_feature_table = json.load(f)
+        return token_feature_table
+
     # Load the raw dataset containing stories, each with multiple tokens and associated vectors.
     with open(data_dir, 'r') as file:
         data_raw = json.load(file)
@@ -83,20 +90,22 @@ def plot_token_feature_distribution(token_feature_table, token_id):
 
     feature_distribution = token_feature_table[token_id]
 
+    # import pdb; pdb.set_trace()
+
     plt.figure(figsize=(12, 4))
     plt.bar(
         range(len(feature_distribution)),
         feature_distribution,
         color="red"
     )
-    plt.title(f"Feature Magnitude for Token ID {token_id} (Car)", fontsize=16)
+    plt.title(f"Feature Magnitude for Token ID {token_id} (Train)", fontsize=16)
     plt.xlabel("Feature Index", fontsize=12)
     plt.ylabel("Value", fontsize=12)
     plt.xticks(fontsize=10)
     plt.yticks(fontsize=10)
-    plt.ylim(0, 0.025)
+    plt.ylim(0, 0.05)
     plt.tight_layout()
-    plt.savefig("./asset/activated_features_car.png", dpi=900)
+    plt.savefig("./asset/activated_features_train.png", dpi=900)
     plt.close()
 
 
@@ -106,7 +115,10 @@ if __name__ == '__main__':
     sae_model.load_state_dict(torch.load('./model/20250403-041718/best_model.pth'))
     token_feature_table = build_token_feature_table(sae_model)
 
-    print(f"{'car'}: 1803")
-    plot_token_feature_distribution(token_feature_table, '1803')
+    # print(f"{'car'}: 1803")
+    # plot_token_feature_distribution(token_feature_table, '1803')
+
+    print(f"{'train'}: 5426")
+    plot_token_feature_distribution(token_feature_table, '5426')
 
 

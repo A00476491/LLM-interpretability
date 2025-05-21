@@ -69,7 +69,7 @@ $$
 
 Note that a token $x_i$ may appear multiple times in the story, resulting in multiple corresponding latent vectors $z_{ij}$.
 
-![activated features for car](./asset/activated_features_car.png)
+![activated features for car](./asset/activated_features_train.png)
 
 
 ## 4. Intervention Experiment
@@ -77,16 +77,10 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 - **Original** *(no intervention)*:  
   `LLM layer15 -> x -> LLM layer16`
 
-- **Token Activation** *(intervention applied)*:  
+- **feature Activation** *(intervention applied)*:  
   ```python
   z = SAE.encode(x)
-  z = z + alpha * v
-  x_modified = SAE.decode(z)
-
-- **Token suppression** *(intervention applied)*:  
-  ```python
-  z = SAE.encode(x)
-  z = z - beta * v
+  z = z[feature_index] + alpha * average_feature_magnitude
   x_modified = SAE.decode(z)
 
 ---
@@ -100,10 +94,6 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 **Activate "train":**  
 **Q:** Generally, which is smaller, a car or a train?  
 **A:** *train*
-
-**Suppress "car":**  
-**Q:** Generally, which is smaller, a car or a train?  
-**A:** *a train*
   
 ---
 
@@ -111,32 +101,34 @@ Note that a token $x_i$ may appear multiple times in the story, resulting in mul
 
 #### 🔹 Content Control
 
-**Activate `slowly`:**  
-Q: Imagine a traffic scene.  
-A: As the sun sets over the city, **a steady stream of cars** passes by, honing through the streets. The vehicles are a steady, rhythmic pattern, weaving through the city **like a slow, deliberate dance**. The cars are a mix of red, green, and yellow, as if on a parade down the road.
+**Activate `Nothing`:**  
 
-**Activate `quickly`:**  
-Q: Imagine a traffic scene.  
-A: A driver is driving through a **busy intersection**, trying to navigate through a jam of cars. **The traffic is moving at a high speed**, with many vehicles trying to make their way through the narrow lanes. The driver is trying to **make a quick decision** to avoid a collision, but is struggling to make a decision.
+Q: Imagine a traffic scene.
+A: In a bustling city, vehicles are moving at high speeds, with cars, buses, and motorcycles all rushing towards each other. The traffic is chaotic, with drivers honking their horns and weaving through intersections. The sky is filled with the sound of sirens, and the air is thick with the smell of exhaust fumes.
 
-#### 🔹 Perspective/Style Control
 
-**Activate `feeling`:**  
-Q: Imagine a traffic scene.  
-A: A bustling city filled with cars and people as the sun sets casting a golden glow over the city skyline. The traffic is heavy with cars honking and horns as people rushing to their destinations or trying to find their way through the city. **The city is a vibrant and dynamic place with its streets and buildings bustling with life**.
+**Activate `chatting`:**  
 
-#### 🔹 Lexical Insertion
+Q: Imagine a traffic scene.
+A: In the bustling city, a group of pedestrians are rushing through the busy intersection. They are all wearing mismatched clothing, each carrying their own bags and phones. The sun is shining, casting a warm glow on the pavement. The traffic is heavy, with cars honking and horns blaring. **The sound of people talking and laughing fills the air**.   
 
-**Activate `glow`:**  
-Q: Imagine a traffic scene.  
-A: Traffic patterns are chaotic and unpredictable, with cars and buses moving in waves and lines, and pedestrians and cyclists jostling for space. **The sun is high and casting a golden glow over the landscape, but it's not enough to illuminate the road**. The sky is a shade of orange and pink, with clouds and raindrops dancing in the sunlight.
 
-#### 🔹 Semantic Association
+**Activate `helpful`:**  
 
-**Activate `day`:**  
-Q: Imagine a traffic scene.  
-A: In a bustling city, a driver is driving through a congested intersection. The driver is **late for a crucial meeting**, and the traffic is jammed with cars, trucks, and buses. The driver must navigate through the traffic, **trying to find a way to reach the destination before the meeting**.
+Q: Imagine a traffic scene.
+A: Traffic congestion is a common occurrence in urban areas, where vehicles are jammed with people trying to reach their destinations. This can lead to delays, increased traffic, and higher emissions. To mitigate this issue, **cities often implement traffic management strategies** such as traffic lights, signal timing, and congestion pricing. Additionally, **public transportation systems can be improved** to reduce reliance on personal vehicles.
 
+
+**Activate `brightly`:**  
+
+Q: Imagine a traffic scene.
+A: In the busy city, cars and pedestrians are rushing, with traffic lights and signs guiding the flow. The streets are narrow and busy, with cars and buses weaving through the intersections. **The sky is a bright blue**, with a few clouds overhead, casting a gray and ominous look on the city. The city is bustling, with people and vehicles everywhere, making it hard to see the distance.  
+
+
+**Activate `protect`:**  
+
+Q: Imagine a traffic scene.
+A: A car is moving slowly on a busy street, honking its horn and weaving through oncoming traffic. **The driver is trying to avoid hitting a pedestrian, who is crossing the road**. The scene is chaotic, with cars and pedestrians moving at a high speed.
 
 
 # How about tied-weight?
