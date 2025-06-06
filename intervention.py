@@ -124,23 +124,11 @@ class Intervene:
         print("=== Original Output ===")
         self.generate()
 
-        print("\n=== Through SAE ===")
-        self.handle = self.lm.model.layers[14].register_forward_hook(self.hook_SAE)
-        self.generate()
-        self.handle.remove()
-
         print("\n=== Activate 'train' ===")
         token_id_train = self.get_token(" train")
         print(token_id_train)
         self.handle = self.lm.model.layers[14].\
             register_forward_hook(self.make_hook_activate(token_id=token_id_train, strength=15))
-        self.generate()
-        self.handle.remove()
-
-        print("\n=== Suppress 'car' ===")
-        token_id_car = self.get_token(" car")
-        self.handle = self.lm.model.layers[14].\
-            register_forward_hook(self.make_hook_suppress(token_id=token_id_car, strength=30))
         self.generate()
         self.handle.remove()
     
@@ -165,4 +153,4 @@ if __name__ == '__main__':
 
     exp =  Intervene(sae_model_dir='./model/20250403-041718/best_model.pth')
     exp.case1()
-    # exp.case2()
+    exp.case2()

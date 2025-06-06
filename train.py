@@ -43,8 +43,10 @@ class SparseAutoencoderTrainer:
         dataset = [v2_item[1] for v1 in dataset_raw.values() for v2 in v1.values() for v2_item in v2]
         data_tensor = torch.tensor(dataset, dtype=torch.float32)
 
-        train, test = train_test_split(data_tensor, test_size=0.3, random_state=42)
-        val, test = train_test_split(test, test_size=0.67, random_state=42)
+        # train, test = train_test_split(data_tensor, test_size=0.3, random_state=42)
+        # val, test = train_test_split(test, test_size=0.67, random_state=42)
+
+        train, val = train_test_split(val, test_size=0.1, random_state=42)
 
         self.train_loader = DataLoader(TensorDataset(train), batch_size=self.cfg.batch_size, shuffle=True, drop_last=True)
         self.val_loader = DataLoader(TensorDataset(val), batch_size=self.cfg.batch_size, shuffle=False, drop_last=True)

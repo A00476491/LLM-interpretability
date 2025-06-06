@@ -5,15 +5,15 @@ import json
 from tqdm import tqdm
 
 # hook the 15th decoder output of lm
-features = {}
+activations = {}
 def forward_hook(module, input, output):
-    features["decoder15"] = copy.deepcopy(output[0].cpu().detach() \
+    activations["decoder15"] = copy.deepcopy(output[0].cpu().detach() \
                                     if isinstance(output, (tuple, list)) else output.cpu().detach())
-    features["decoder15"] = features["decoder15"].numpy().tolist()
+    activations["decoder15"] = activations["decoder15"].numpy().tolist()
 
 
 # Generate a story that begins with a specific sentence
-# Return generated tokens and corresponding features
+# Return generated tokens and corresponding activations
 def generate_single_story(lm, query = "I saw a Truck on the way to school."):
 
     prompt = f"Give me a short story that begins with: {query} \n\n"
@@ -29,19 +29,19 @@ def generate_single_story(lm, query = "I saw a Truck on the way to school."):
     dummy_input = tokenizer(text, return_tensors="pt")["input_ids"].cuda()
     eos_token_id = tokenizer.eos_token_id
 
-    token_feature = []
+    token_activation = []
     for i in range(150):
         out = lm(dummy_input)
         
         next_token_id = torch.argmax(out.logits[:, -1, :], dim=-1).unsqueeze(0)  # shape: (1, 1)
         
         dummy_input = torch.cat([dummy_input, next_token_id], dim=1)
-        token_feature.append([str(next_token_id.cpu().numpy().tolist()[0][0]), features["decoder15"][0][-1]])
+        token_activation.append([str(next_token_id.cpu().numpy().tolist()[0][0]), activations["decoder15"][0][-1]])
 
         if next_token_id.item() == eos_token_id:
             break
 
-    return token_feature
+    return token_activation
 
 
 def generate_stories(lm, sentences, save_dir='./data/dataset.json'):
@@ -79,11 +79,11 @@ def generate_stories(lm, sentences, save_dir='./data/dataset.json'):
         for obj in sentences:
             for k, sentences in obj.items():
                 for sentence in tqdm(sentences, desc=f"Processing '{k}'", leave=False):
-                    token_feature = generate_single_story(lm, sentence)
+                    token_activation = generate_single_story(lm, sentence)
                     try:
-                        stories[k][sentence] = token_feature
+                        stories[k][sentence] = token_activation
                     except:
-                        stories[k] = {sentence: token_feature}
+                        stories[k] = {sentence: token_activation}
 
     with open(save_dir, 'w', encoding='utf-8') as f:
         json.dump(stories, f, indent=4, ensure_ascii=False)
